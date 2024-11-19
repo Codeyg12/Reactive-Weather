@@ -5,15 +5,40 @@ const Form = ({ setLocation }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setLocation(typedLocation);
+    findCityCode(typedLocation);
     setTypedLocation("");
+  };
+
+  const findCityCode = async (location) => {
+    const response = await fetch(
+      `http://dataservice.accuweather.com/locations/v1/cities/search?apikey=${process.env.REACT_APP_API_KEY}&q=${location}`
+    );
+    const data = await response.json();
+    console.log(data);
+
+    const city = data[0].LocalizedName;
+
+    getWeather(data[0].Key, city);
+  };
+
+  const getWeather = async (cityCode, city) => {
+    const response = await fetch(
+      `http://dataservice.accuweather.com/currentconditions/v1/${cityCode}?apikey=${process.env.REACT_APP_API_KEY}`
+    );
+    const data = await response.json();
+    const weather = {
+      name: city,
+      temp: data[0].Temperature.Imperial.Value,
+      forecast: data[0].WeatherText,
+    };
+    setLocation(weather);
   };
 
   return (
     <div className="form">
       <form onSubmit={handleSubmit}>
         <label className="city">
-          City:
+          City:&nbsp;
           <input
             type="text"
             value={typedLocation}
