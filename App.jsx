@@ -8,7 +8,8 @@ import Form from "./components/Form";
 function App() {
   const [location, setLocation] = useState({
     name: "New York",
-    temp: 70,
+    imperialTemp: 70,
+    metricTemp: 21,
     forecast: "Sunny",
   });
   const [allWeather, setAllWeather] = useState(false);

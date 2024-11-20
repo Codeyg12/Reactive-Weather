@@ -14,8 +14,6 @@ const Form = ({ setLocation }) => {
       `http://dataservice.accuweather.com/locations/v1/cities/search?apikey=${process.env.REACT_APP_API_KEY}&q=${location}`
     );
     const data = await response.json();
-    console.log(data);
-
     const city = data[0].LocalizedName;
 
     getWeather(data[0].Key, city);
@@ -26,9 +24,11 @@ const Form = ({ setLocation }) => {
       `http://dataservice.accuweather.com/currentconditions/v1/${cityCode}?apikey=${process.env.REACT_APP_API_KEY}`
     );
     const data = await response.json();
+
     const weather = {
       name: city,
-      temp: data[0].Temperature.Imperial.Value,
+      imperialTemp: data[0].Temperature.Imperial.Value,
+      metricTemp: data[0].Temperature.Metric.Value,
       forecast: data[0].WeatherText,
     };
     setLocation(weather);

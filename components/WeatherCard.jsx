@@ -14,7 +14,7 @@ function WeatherCard({ city, temp, forecast }) {
       </div>
       <div className="card-body">
         <h3 className="card-title">{city}</h3>
-        <h5 className="card-text">{temp}</h5>
+        <h5 className="card-text">{temp}°F</h5>
         <h5 className="card-text">{forecast}</h5>
       </div>
     </div>
